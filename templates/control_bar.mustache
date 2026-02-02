@@ -1,0 +1,175 @@
+{{^is_edit_mode}}
+    {{#logging_enabled}}
+        <div title='{{#str}}loggingenabled, block_maristtela{{/str}}' class='recording' aria-label='{{#str}}loggingenabled, block_maristtela{{/str}}'></div>
+    {{/logging_enabled}}
+    <button class='openai_input_popout_btn' title="{{#str}}popout, block_maristtela{{/str}}" id="popout" aria-label="{{#str}}popout, block_maristtela{{/str}}">
+        <svg id="popout_icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="#006341" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-maximize">
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <polyline points="9 21 3 21 3 15"></polyline>
+            <line x1="21" y1="3" x2="14" y2="10"></line>
+            <line x1="3" y1="21" x2="10" y2="14"></line>
+        </svg>
+    </button>
+{{/is_edit_mode}}
+
+<div id="control_bar" role="region" aria-label="{{#str}}chatinputregion, block_maristtela{{/str}}">
+    <div class="openai_input_bar" id="input_bar">
+        <textarea
+            rows="1"
+            id="openai_input"
+            placeholder="{{#str}}askaquestion, block_maristtela{{/str}}"
+            name="message"
+            aria-label="{{#str}}inputyourquestion, block_maristtela{{/str}}"
+            autocomplete="off"
+            spellcheck="true"
+        ></textarea>
+
+        <button
+            class='openai_input_submit_btn'
+            title="{{#str}}submit, block_maristtela{{/str}}"
+            id="go"
+            aria-label="{{#str}}submitquestion, block_maristtela{{/str}}"
+            type="button"
+        >
+            {{#pix_send}}
+                <img
+                    src="{{{config.wwwroot}}}{{{pix_send}}}"
+                    class='openai_input_submit_btn_icon'
+                    alt="{{#str}}submit, block_maristtela{{/str}}"
+                />
+            {{/pix_send}}
+            {{^pix_send}}
+                <img
+                    src="{{{config.wwwroot}}}{{{pix_arrow_right}}}"
+                    class='openai_input_submit_btn_icon'
+                    alt="{{#str}}submit, block_maristtela{{/str}}"
+                />
+            {{/pix_send}}
+        </button>
+    </div>
+
+    <button
+        id="refresh"
+        title="{{#str}}new_chat, block_maristtela{{/str}}"
+        aria-label="{{#str}}new_chat, block_maristtela{{/str}}"
+        type="button"
+    >
+        {{#pix_newchat}}
+            <img
+                src="{{{config.wwwroot}}}{{{pix_newchat}}}"
+                alt="{{#str}}new_chat, block_maristtela{{/str}}"
+            />
+        {{/pix_newchat}}
+        {{^pix_newchat}}
+            <img
+                src="{{{config.wwwroot}}}{{{pix_refresh}}}"
+                alt="{{#str}}new_chat, block_maristtela{{/str}}"
+            />
+        {{/pix_newchat}}
+    </button>
+</div>
+
+<style>
+    #control_bar {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.5rem 1rem;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
+        user-select: none;
+        transition: all 0.3s ease;
+    }
+
+    #control_bar.expanded {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1rem;
+        box-shadow: 0 0 05px rgba(0, 99, 65, 0.3);
+    }
+
+    .openai_input_bar {
+        flex-grow: 1;
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    #openai_input {
+        flex-grow: 1;
+        border: 1px solid #ced4da;
+        border-radius: 20px;
+        padding: 0.4rem 1rem;
+        font-size: 1rem;
+        resize: none;
+        transition: border-color 0.2s ease-in-out;
+    }
+
+    #openai_input:focus {
+        outline: none;
+        border-color: #4caf50;
+        box-shadow: 0 0 6px #4caf50aa;
+    }
+
+    .openai_input_submit_btn {
+        background-color: #006341;
+        border: none;
+        cursor: pointer;
+        padding: 0.25rem;
+        border-radius: 50%;
+        transition: background-color 0.2s ease;
+    }
+
+    .openai_input_submit_btn:hover,
+    .openai_input_submit_btn:focus {
+        background-color: #004d33;
+        outline: none;
+    }
+
+    .openai_input_submit_btn_icon {
+        width: 24px;
+        height: 24px;
+        display: block;
+        filter: brightness(0) invert(1);
+    }
+
+    .openai_input_popout_btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.25rem;
+        border-radius: 50%;
+        transition: background-color 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .openai_input_popout_btn:hover,
+    .openai_input_popout_btn:focus {
+        background-color: #e0f2f1;
+        outline: none;
+    }
+
+    .openai_input_popout_btn svg {
+        transition: transform 0.3s ease, stroke 0.3s ease;
+    }
+
+    #control_bar.expanded .openai_input_popout_btn svg {
+        transform: rotate(45deg);
+        stroke: #004d33;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const popoutBtn = document.getElementById('popout');
+        const controlBar = document.getElementById('control_bar');
+
+        if (popoutBtn && controlBar) {
+            popoutBtn.addEventListener('click', function () {
+                controlBar.classList.toggle('expanded');
+            });
+        }
+    });
+</script>
