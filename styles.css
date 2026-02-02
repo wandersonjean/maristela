@@ -1,0 +1,263 @@
+.block_maristtela #openai_chat_log {
+    display: flex;                /* Define o layout como flexbox para os elementos dentro do log de chat */
+    flex-direction: column;       /* Organiza os itens no log de chat em uma coluna */
+    max-height: 20rem;            /* Define a altura máxima do log de chat para 20rem */
+    overflow-y: scroll;           /* Adiciona barra de rolagem vertical se o conteúdo exceder a altura */
+    margin-bottom: 0.5rem;        /* Adiciona uma margem inferior de 0.5rem */
+}
+
+.block_maristtela #openai_chat_log p {
+    margin: 0;                    /* Remove a margem padrão dos parágrafos dentro do log de chat */
+}
+
+.block_maristtela #openai_chat_log a {
+    color: white;                 /* Define a cor do texto dos links como branco */
+    text-decoration: underline;   /* Adiciona sublinhado aos links */
+}
+
+.block_maristtela #control_bar {
+    display: flex;                /* Define o layout do controle como flexbox */
+    gap: 0.5rem;                  /* Define um espaçamento de 0.5rem entre os itens */
+}
+
+.block_maristtela #control_bar button:hover {
+    filter: brightness(0.8);      /* Reduz o brilho do botão em 20% ao passar o mouse */
+}
+
+.block_maristtela #control_bar #go {
+    border-radius: 0 0.5rem 0.5rem 0;  /* Arredonda os cantos direitos do botão "go" */
+}
+
+.block_maristtela #control_bar button  {
+    transition: filter 0.2s ease; /* Adiciona uma transição suave para o filtro de brilho */
+    border: none;                 /* Remove qualquer borda do botão */
+    border-radius: 0.5rem;        /* Arredonda os cantos dos botões */
+    width: 2.5rem;                /* Define a largura dos botões como 2.5rem */
+}
+
+.openai_input_submit_btn {
+    background-color: #006341; /* Define a cor de fundo do botão de envio com a variável --primary */
+    color: var(--white);              /* Define a cor do texto do botão como branco */
+}
+
+.block_maristtela .openai_input_popout_btn {
+    position: absolute;              /* Posiciona o botão popout de forma absoluta */
+    top: 0.75rem;                    /* Define a posição superior como 0.75rem */
+    right: 0.5rem;                   /* Define a posição à direita como 0.5rem */
+    width: 2rem;                     /* Define a largura do botão como 2rem */
+    height: 2rem;                    /* Define a altura do botão como 2rem */
+    border-radius: 99rem;            /* Arredonda completamente os cantos do botão (botão circular) */
+    padding: 0.4rem;                 /* Adiciona preenchimento interno de 0.4rem */
+    display: flex;                   /* Define o layout interno do botão como flexbox */
+    border: none;                    /* Remove qualquer borda do botão */
+    z-index: 2;                      /* Define a sobreposição do botão para 2 */
+}
+.openai_input_popout_btn {
+    background-color: green;
+}
+
+.openai_input_submit_btn_icon {
+    width: 80%;                      /* Define a largura dos ícones do botão como 80% do botão */
+}
+
+.openai_input_bar {
+    display: flex;                   /* Define o layout da barra de entrada como flexbox */
+    width: 100%;                     /* Define a largura da barra de entrada como 100% */
+}
+
+.block_maristtela img {
+    transform: scale(0.7);           /* Reduz o tamanho das imagens dentro do bloco para 70% do tamanho original */
+}
+
+
+.block_maristtela #openai_input,
+.openai_input_bar input {
+    padding: 0.5rem;                 /* Adiciona preenchimento interno de 0.5rem */
+    border-radius: 0.5rem 0 0 0.5rem; /* Arredonda os cantos esquerdos do campo de entrada */
+    border: 1px solid gray;          /* Adiciona uma borda cinza de 1px ao campo de entrada */
+    width: 100%;                     /* Define a largura do campo de entrada como 100% */
+    transition: background 0.4s ease;/* Adiciona uma transição suave de 0.4s para mudanças no fundo */
+}
+
+.block_maristtela #openai_input.error {
+    border: 1px solid red;           /* Adiciona uma borda vermelha ao campo de entrada em caso de erro */
+}
+
+.block_maristtela .openai_message {
+    padding: 0.75rem 1rem;           /* Adiciona preenchimento interno (0.75rem nos lados e 1rem nas bordas horizontais) */
+    background: #f4f4f4;             /* Define o fundo da mensagem como cinza claro */
+    border-radius: 0.5rem;           /* Arredonda os cantos da mensagem */
+    margin-bottom: 1.75rem;          /* Adiciona uma margem inferior de 1.75rem */
+    width: fit-content;              /* Ajusta a largura da mensagem ao conteúdo */
+    max-width: 90%;                  /* Define a largura máxima da mensagem como 90% */
+    animation: block_maristtela_popup 0.4s cubic-bezier(0.87, 0, 0.13, 1); /* Adiciona uma animação para o surgimento da mensagem */
+    position: relative;              /* Define a posição como relativa, para manipulação de elementos filhos */
+}
+
+.block_maristtela .openai_message:before {
+    position: absolute;              /* Posiciona o pseudo-elemento antes da mensagem de forma absoluta */
+    top: -1.5rem;                    /* Define a posição superior como 1.5rem acima da mensagem */
+    left: 0;                         /* Alinha o pseudo-elemento à esquerda */
+    color: gray;                     /* Define a cor do pseudo-elemento como cinza */
+    opacity: 0;                      /* Define a opacidade inicial como 0 (invisível) */
+    animation: block_maristtela_fade-in 0.4s ease 0.4s forwards; /* Adiciona uma animação de fade-in após 0.4s */
+}
+
+.block_maristtela .openai_message.user {
+    align-self: flex-end;            /* Alinha a mensagem do usuário à direita */
+    text-align: right;               /* Alinha o texto da mensagem do usuário à direita */
+    background: var(--blue);         /* Define o fundo da mensagem do bot com a variável --blue */
+    color: var(--white);             /* Define a cor do texto da mensagem do bot como branco */
+}
+
+.block_maristtela .openai_message.user:before {
+    right: 0;                        /* Alinha o pseudo-elemento à direita */
+    left: unset;                     /* Remove a definição de alinhamento à esquerda */
+}
+
+.block_maristtela .openai_message.bot {
+    background: var(--green);         /* Define o fundo da mensagem do bot com a variável --blue */
+    color: var(--white);             /* Define a cor do texto da mensagem do bot como branco */
+}
+
+.block_maristtela .openai_message.loading {
+    animation: block_maristtela_thinking 1s ease infinite; /* Adiciona uma animação de "pensando" para mensagens em carregamento */
+}
+
+.block_maristtela .openai_message.loading:before {
+    animation: none;                 /* Remove a animação do pseudo-elemento em mensagens de carregamento */
+    opacity: 0;                      /* Torna o pseudo-elemento invisível */
+}
+
+.block_maristtela.disabled,
+.block_maristtela .disabled {
+    opacity: 0.25;                   /* Reduz a opacidade dos elementos desabilitados para 25% */
+    pointer-events: none;            /* Desativa a interação com elementos desabilitados */
+}
+
+.block_maristtela.expanded {
+    position: fixed;                 /* Define a posição como fixa na tela */
+    height: 70vh;                    /* Define a altura como 70% da altura da janela */
+    width: 30rem;                    /* Define a largura como 30rem */
+    left: 50%;                       /* Centraliza horizontalmente na tela */
+    top: 50%;                        /* Centraliza verticalmente na tela */
+    transform: translate(-50%, -50%); /* Ajusta a posição final para centralizar completamente */
+    outline: 100vw solid #00000029;  /* Adiciona uma borda de contorno translúcida ao redor */
+    z-index: 2;                      /* Define a sobreposição para 2 */
+}
+
+.block_maristtela.expanded .card-body {
+    overflow-y: auto;                /* Adiciona barra de rolagem vertical se o conteúdo da carta exceder a altura */
+}
+
+.block_maristtela.expanded #openai_chat_log {
+    max-height: unset;               /* Remove a altura máxima do log de chat quando expandido */
+    overflow-y: unset;               /* Remove a barra de rolagem vertical quando expandido */
+    padding-bottom: 3rem !important; /* Adiciona preenchimento inferior de 3rem */
+    padding-top: 1rem;               /* Adiciona preenchimento superior de 1rem */
+}
+
+.block_maristtela.expanded #control_bar {
+    display: flex;                   /* Define o layout da barra de controle como flexbox */
+    gap: .5rem;                      /* Define um espaçamento de 0.5rem entre os itens */
+    position: fixed;                 /* Posiciona a barra de controle de forma fixa */
+    bottom: 1rem;                    /* Posiciona a barra a 1rem do fundo da janela */
+    width: calc(100% - 2rem);        /* Define a largura como 100% da janela menos 2rem */
+}
+
+.block_maristtela.expanded .openai_message {
+    width: fit-content !important;   /* Garante que a largura da mensagem se ajuste ao conteúdo quando expandida */
+}
+
+.block_maristtela .recording {
+    width: 0.5rem;                   /* Define a largura do indicador de gravação como 0.5rem */
+    height: 0.5rem;                  /* Define a altura do indicador de gravação como 0.5rem */
+    background: #ff0000;             /* Define a cor de fundo como vermelho */
+    position: absolute;              /* Posiciona o indicador de gravação de forma absoluta */
+    top: 1.5rem;                     /* Define a posição superior como 1.5rem */
+    right: 3rem;                     /* Define a posição à direita como 3rem */
+    border-radius: 99rem;            /* Arredonda completamente os cantos do indicador (círculo) */
+    filter: opacity(0.5);            /* Reduz a opacidade para 50% */
+    animation: block_maristtela_thinking 3s linear infinite; /* Adiciona uma animação de "pensando" ao indicador */
+}
+
+.block_maristtela input {
+    padding: 0.5rem;                 /* Adiciona preenchimento interno de 0.5rem aos campos de entrada */
+    border-radius: 0.5rem;           /* Arredonda os cantos dos campos de entrada */
+    border: 1px solid grey;          /* Adiciona uma borda cinza de 1px aos campos de entrada */
+}
+
+.block_maristtela .report_container {
+    display: flex;                   /* Define o layout da container de relatórios como flexbox */
+    gap: 1rem;                       /* Define um espaçamento de 1rem entre os itens */
+    margin-bottom: 1rem;             /* Adiciona uma margem inferior de 1rem */
+}
+
+@media screen and (max-width: 750px) {
+    .drawerheader {
+        pointer-events: none;        /* Desativa a interação com o cabeçalho da gaveta em telas pequenas */
+    }
+    .drawerheader button {
+        pointer-events: all;         /* Mantém a interação com os botões do cabeçalho da gaveta */
+    }
+    .block_maristtela.expanded {
+        transform: unset;            /* Remove a transformação centralizada em telas pequenas */
+        top: 0;                      /* Alinha o bloco ao topo da tela */
+        left: 0;                     /* Alinha o bloco à esquerda da tela */
+        width: 100vw;                /* Define a largura como 100% da largura da janela */
+        height: 100vh;               /* Define a altura como 100% da altura da janela */
+    }
+    .block_maristtela.expanded .openai_input_popout_btn {
+        right: 3rem;                 /* Ajusta a posição do botão popout à direita */
+    }
+    .block_maristtela.expanded .recording {
+        right: 5.5rem;               /* Ajusta a posição do indicador de gravação à direita */
+    }
+    .block_maristtela .report_container {
+        flex-direction: column;      /* Altera a direção dos elementos na container de relatórios para coluna em telas pequenas */
+    }
+}
+
+@keyframes block_maristtela_popup {
+    0% {
+        opacity: 0;                  /* Define a opacidade inicial como 0 (invisível) */
+        transform: translateY(5px);  /* Move o elemento 5px para baixo inicialmente */
+    }
+
+    70% {
+        opacity: 1;                  /* Define a opacidade em 100% (visível) */
+        transform: translateY(-2.5px); /* Move o elemento 2.5px para cima */
+    }
+
+    85% {
+        transform: translateY(2.5px); /* Move o elemento 2.5px para baixo */
+    }
+
+    100% {
+        transform: translateY(0);    /* Retorna o elemento à posição original */
+    }
+}
+
+@keyframes block_maristtela_thinking {
+    0% {
+        opacity: 1;                  /* Define a opacidade inicial como 100% */
+    }
+
+    50% {
+        opacity: 0.25;               /* Reduz a opacidade para 25% no meio da animação */
+    }
+
+    100% {
+        opacity: 1;                  /* Retorna a opacidade para 100% no final da animação */
+    }
+}
+
+@keyframes block_maristtela_fade-in {
+    from {
+        opacity: 0;                  /* Define a opacidade inicial como 0 (invisível) */
+    }
+
+    to {
+        opacity: 1;                  /* Define a opacidade final como 100% (visível) */
+    }
+}
